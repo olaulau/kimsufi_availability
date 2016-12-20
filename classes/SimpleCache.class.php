@@ -2,7 +2,7 @@
 
 abstract class SimpleCache {
 
-	private static $cacheDir = 'data';
+	private static $cacheDir = '../data';
 	
 	private $name;
 	private $ttl;
@@ -35,7 +35,7 @@ abstract class SimpleCache {
 			$this->set($data);
 		}
 		else {
-			$data = json_decode(file_get_contents($this->filename()));
+			$data = json_decode(file_get_contents($this->filename()), TRUE);
 		}
 		return $data;
 	}

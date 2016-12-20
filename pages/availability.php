@@ -1,5 +1,8 @@
 <?php
 
+require_once '../classes/AvailabilitiesCache.class.php';
+
+
 /* data structure :
 answer
 availability
@@ -41,7 +44,6 @@ die;
 
 
 //  config
-$ws_url = "https://ws.ovh.com/dedicated/r2/ws.dispatcher/getAvailability2";
 $seached_reference = "160sk1"; // KS1
 //$seached_reference = "161sk2"; // KS-2E
 $searched_zone = "fr";
@@ -54,36 +56,8 @@ $use_cache = true;
 
 
 //  get data
-if(!$use_cache) {
-	//  fetch data
-	if(!$use_cache) {
-		$availability2_content = file_get_contents($ws_url);
-		file_put_contents($request_filename, $availability2_content);
-	}
-	else {
-		$availability2_content = file_get_contents($request_filename);
-	}
-	$availability2_object = json_decode($availability2_content);
-
-
-	//  convert data to a zone-based array
-	$availability_array = array();
-	$array = $availability2_object->answer->availability;
-	foreach($array as $element) {
-		$availability_array[$element->reference] = array();
-		foreach($element->metaZones as $metazone) {
-			$availability_array[$element->reference][$metazone->zone] = $metazone->availability;
-		}
-	}
-	//echo "<pre>";
-	//var_dump($availability_array);
-	//echo "</pre>";
-	//die;
-	file_put_contents($json_filename, json_encode($availability_array));
-}
-else {
-	$availability_array = json_decode(file_get_contents($json_filename), true);
-}
+$ac = new AvailabilitiesCache();
+$availabilities = $ac->get();
 
 
 
@@ -98,13 +72,13 @@ else {
 <body>
 	<?php
 	//  search and notify
-	if(isset($availability_array[$seached_reference])) {
-		if(isset($availability_array[$seached_reference][$searched_zone])) {
-			if($availability_array[$seached_reference][$searched_zone] != "unavailable" ) {
+	if(isset($availabilities[$seached_reference])) {
+		if(isset($availabilities[$seached_reference][$searched_zone])) {
+			if($availabilities[$seached_reference][$searched_zone] != "unavailable" ) {
 				//echo "envoi email ... <br/>";
 				$cmd = $mail_cmd . " " . $email_recipient . " " .
 				"\"Kimsufi availability\"" . " " .
-				"\"$seached_reference has availability " . $availability_array[$seached_reference][$searched_zone] . " in zone $searched_zone !!!";
+				"\"$seached_reference has availability " . $availabilities[$seached_reference][$searched_zone] . " in zone $searched_zone !!!";
 				//echo $cmd; die;
 				$output = exec_cmd($cmd, true);
 				//die;
@@ -119,7 +93,7 @@ else {
 	<tr>
 		<th>server</th>
 		<?php
-		foreach(reset($availability_array) as $id => $value) {
+		foreach(reset($availabilities) as $id => $value) {
 			?>
 			<th><?= $id ?></th>
 			<?php
@@ -128,7 +102,7 @@ else {
 	</tr>
 	<?php
 	
-	foreach($availability_array as $id =>  $row) {
+	foreach($availabilities as $id =>  $row) {
 		?>
 		<tr>
 			<td><?= $id ?></td>
