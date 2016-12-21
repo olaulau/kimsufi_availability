@@ -5,6 +5,8 @@
 <body>
 	<h3><a href="pages/availability.php">availability</a></h3>
 	<h3><a href="pages/servers.php">servers</a></h3>
+	<br/>
+	<h3><a href="pages/servers_availability.php">servers availability</a></h3>
 </body>
 </html>
 

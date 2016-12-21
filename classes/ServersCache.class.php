@@ -41,8 +41,7 @@ class ServersCache extends SimpleCache {
 						$currency = $span->nodeValue;
 					}
 				}
-				$res[] = array(
-						'ref' => $ref,
+				$res[$ref] = array(
 						'actions' => $actions,
 						'availability' => $availability,
 						'name' => $name,

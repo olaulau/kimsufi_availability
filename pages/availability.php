@@ -16,9 +16,8 @@ availability
 - separate CLI and web
 - use cache to prevent web DDOS (30s)
 - cron every minute, send email if available
-- store last mail send date & last unavailable date to prevent massive mail flood whena vailable
-- get server list from HTML to have labels corresponding to ids
-- configure display and cron throurh GUI (servers, zone ...)
+- store last mail send date & last unavailable date to prevent massive mail flood when available
+- configure display and cron through GUI (servers, zone ...)
 */
 
 
@@ -50,18 +49,17 @@ $searched_zone = "fr";
 $email_recipient = "olaulau@gmail.com";
 $mail_cmd = '/data/home/a/d/admindl/bin/mail.sh'; //TODO try to use this directory
 $mail_cmd = '/data/home/a/d/admindl/admindlweb/admin.d-l.fr-web/htdocs/kimsufi' . '/mail.sh';
-$request_filename = '../data/getAvailability2.json';
-$json_filename = '../data/availability.json';
-$use_cache = true;
 
 
 //  get data
 $ac = new AvailabilitiesCache();
 $availabilities = $ac->get();
+$zones = array();
+foreach(reset($availabilities) as $id => $value) {
+	$zones[] = $id;
+}
 
 
-
-//  display data
 ?>
 <!doctype html>
 <html lang="en">
@@ -93,24 +91,26 @@ $availabilities = $ac->get();
 	<tr>
 		<th>server</th>
 		<?php
-		foreach(reset($availabilities) as $id => $value) {
+		foreach($zones as $zone) {
 			?>
-			<th><?= $id ?></th>
+			<th><?= $zone ?></th>
 			<?php
 		}
 		?>
 	</tr>
-	<?php
 	
-	foreach($availabilities as $id =>  $row) {
+	<?php
+	foreach($availabilities as $ref => $availability) {
 		?>
 		<tr>
-			<td><?= $id ?></td>
-			<td><?= $row['centralEurope'] ?></td>
-			<td><?= $row['fr'] ?></td>
-			<td><?= $row['northAmerica'] ?></td>
-			<td><?= $row['westernEurope'] ?></td>
-			<td><?= $row['hardzone'] ?></td>
+			<td><?= $ref ?></td>
+			<?php
+			foreach ($zones as $zone) {
+				?>
+				<td><?= $availabilities[$ref][$zone] ?></td>
+				<?php
+			}
+			?>
 		</tr>
 		<?php
 	}
@@ -118,5 +118,4 @@ $availabilities = $ac->get();
 	</table>
 </body>
 </html>
-
 

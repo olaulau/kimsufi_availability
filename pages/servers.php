@@ -25,10 +25,10 @@ $servers = $sc->get();
 			<th>currency</th>
 		</tr>
 		<?php
-		foreach($servers as $row) {
+		foreach($servers as $ref => $row) {
 			?>
 			<tr>
-				<td><?= $row['ref'] ?></td>
+				<td><?= $ref ?></td>
 				<td><?= $row['actions'] ?></td>
 				<td><?= $row['availability'] ?></td>
 				<td><?= $row['name'] ?></td>
