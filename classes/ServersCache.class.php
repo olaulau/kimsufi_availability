@@ -1,6 +1,7 @@
 <?php
 
 require_once 'SimpleCache.class.php';
+require_once 'ServersWsCache.class.php';
 
 class ServersCache extends SimpleCache {
 	
@@ -10,12 +11,11 @@ class ServersCache extends SimpleCache {
 	
 	
 	public function realQuery() {
-		//  config
-		$url = 'https://www.kimsufi.com/fr/serveurs.xml';
-		
 		//  get data
+		$swc = new ServersWsCache();
+		$content = $swc->get();
 		$doc = new DOMDocument();
-		@$doc->loadHTMLFile($url);
+		@$doc->loadHTML($content);
 	
 		$rows = $doc->getElementsByTagName('tr');
 		$res = array();
@@ -30,14 +30,14 @@ class ServersCache extends SimpleCache {
 						// server name
 						$spans = $col->getElementsByTagName('span');
 						$span = $spans->item(0);
-						$name = $span->ownerDocument->saveHTML($span);
+						$name = $col->nodeValue;
 					}
 					if($id === 9) {
 						// price
 						$spans = $col->getElementsByTagName('span');
-						$span = $spans->item(1);
+						$span = $spans->item(0);
 						$price = $span->nodeValue;
-						$span = $spans->item(3);
+						$span = $spans->item(2);
 						$currency = $span->nodeValue;
 					}
 				}
