@@ -1,19 +1,11 @@
 <?php
 
-require_once '../classes/ServersCache.class.php';
-require_once '../classes/AvailabilitiesCache.class.php';
+require_once '../classes/ServersAvailabilitiesCache.class.php';
 
 
 // get data
-$sc = new ServersCache();
-$servers = $sc->get();
-
-$ac = new AvailabilitiesCache();
-$availabilities = $ac->get();
-$zones = array();
-foreach(reset($availabilities) as $id => $value) {
-	$zones[] = $id;
-}
+$sac = new ServersAvailabilitiesCache();
+$sa = $sac->get();
 
 
 //  display data
@@ -28,36 +20,25 @@ foreach(reset($availabilities) as $id => $value) {
 	<table>
 		<tr>
 			<th>ref</th>
-			<th>actions</th>
-			<th>availability</th>
-			<th>name</th>
-			<th>price</th>
-			<th>currency</th>
 			<?php
-			foreach($zones as $zone) {
+			foreach(reset($sa) as $header => $val) {
 				?>
-				<th><?= $zone ?></th>
+				<th><?= $header ?></th>
 				<?php
 			}
 			?>
 		</tr>
 		<?php
-		foreach($servers as $ref => $server) {
-			?>
+		foreach($sa as $ref => $server) {?>
 			<tr>
 				<td><?= $ref ?></td>
-				<td><?= $server['actions'] ?></td>
-				<td><?= $server['availability'] ?></td>
-				<td><?= $server['name'] ?></td>
-				<td><?= $server['price'] ?></td>
-				<td><?= $server['currency'] ?></td>
-				<?php
-				foreach ($zones as $zone) {
-					?>
-					<td><?= $availabilities[$ref][$zone] ?></td>
-					<?php
-				}
+			<?php
+			foreach ($server as $val) {
 				?>
+				<td><?= $val ?></td>
+				<?php
+			}
+			?>
 			</tr>
 			<?php
 		}
