@@ -14,7 +14,7 @@ abstract class SimpleCache {
 	}
 	
 	private function filename() {
-		return './' . self::$cacheDir . '/' . $this->name . '.json';
+		return __DIR__ . '/' . self::$cacheDir . '/' . $this->name . '.json';
 	}
 	
 	private function hasExpired() {

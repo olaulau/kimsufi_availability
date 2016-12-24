@@ -7,6 +7,7 @@
 	<h3><a href="pages/servers.php">servers</a></h3>
 	<br/>
 	<h3><a href="pages/servers_availability.php">servers availability</a></h3>
+	<h3><a href="cron.php">cron</a></h3>
 </body>
 </html>
 

@@ -1,13 +1,13 @@
 <?php
 
-require_once 'SimpleCache.class.php';
-require_once '../classes/ServersCache.class.php';
-require_once '../classes/AvailabilitiesCache.class.php';
+require_once __DIR__ . '/SimpleCache.class.php';
+require_once __DIR__ . '/ServersCache.class.php';
+require_once __DIR__ . '/AvailabilitiesCache.class.php';
 
 class ServersAvailabilitiesCache extends SimpleCache {
 	
 	public function __construct() {
-		parent::__construct('servers_availabilities_ws', 1000);
+		parent::__construct('servers_availabilities_ws', 10);
 	}
 	
 	

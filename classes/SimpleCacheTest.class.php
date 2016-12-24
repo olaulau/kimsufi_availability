@@ -1,6 +1,6 @@
 <?php
 
-require_once 'SimpleCache.class.php';
+require_once __DIR__ . '/SimpleCache.class.php';
 
 class SimpleCacheTest extends SimpleCache {
 	

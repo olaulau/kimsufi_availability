@@ -1,7 +1,7 @@
 <?php
 
-require_once 'SimpleCache.class.php';
-require_once 'ServersWsCache.class.php';
+require_once __DIR__ . '/SimpleCache.class.php';
+require_once __DIR__ . '/ServersWsCache.class.php';
 
 class ServersCache extends SimpleCache {
 	
