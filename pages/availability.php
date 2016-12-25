@@ -1,6 +1,6 @@
 <?php
 
-require_once '../classes/AvailabilitiesCache.class.php';
+require_once __DIR__ . '/../classes/AvailabilitiesCache.class.php';
 
 
 /* data structure :

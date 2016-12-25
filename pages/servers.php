@@ -1,6 +1,6 @@
 <?php
 
-require_once '../classes/ServersCache.class.php';
+require_once __DIR__ . '/../classes/ServersCache.class.php';
 
 $sc = new ServersCache();
 $servers = $sc->get();

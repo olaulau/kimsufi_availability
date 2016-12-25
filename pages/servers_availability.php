@@ -1,6 +1,6 @@
 <?php
 
-require_once '../classes/ServersAvailabilitiesCache.class.php';
+require_once __DIR__ . '/../classes/ServersAvailabilitiesCache.class.php';
 
 
 // get data
