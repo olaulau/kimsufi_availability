@@ -1,0 +1,5 @@
+check json request :
+http://stackoverflow.com/questions/1377564/php-check-whether-incoming-request-is-json-type
+
+run multiple ws queries using multiple threads
+
