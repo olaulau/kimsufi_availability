@@ -24,15 +24,13 @@ availability
 function exec_cmd($cmd, $debug=false, $path='') {
 	$prefix = 'PATH=$PATH:/usr/bin:'.$path.' &&';
 	$suffix = '2>&1';
-
 	$cmd_full = "$prefix $cmd $suffix";
-	if($debug)
-		echo "command = <pre> " . var_export($cmd, true) . "</pre>";
 	exec ($cmd_full, $output, $res);
-	if($debug)
+	if($debug) {
+		echo "command = <pre> " . var_export($cmd, true) . "</pre>";
 		echo "output = <pre> " . var_export($output, true) . "</pre>";
-	if($debug)
 		echo "return status = <pre> " . var_export($res, true) . "</pre>";
+	}
 	return $output;
 }
 /*
@@ -40,15 +38,6 @@ $cmd = 'whoami';
 exec_cmd($cmd, true);
 die;
 */
-
-
-//  config
-$seached_reference = "160sk1"; // KS1
-//$seached_reference = "161sk2"; // KS-2E
-$searched_zone = "fr";
-$email_recipient = "olaulau@gmail.com";
-$mail_cmd = '/data/home/a/d/admindl/bin/mail.sh'; //TODO try to use this directory
-$mail_cmd = '/data/home/a/d/admindl/admindlweb/admin.d-l.fr-web/htdocs/kimsufi' . '/mail.sh';
 
 
 //  get data
@@ -69,22 +58,6 @@ foreach(reset($availabilities) as $id => $value) {
 </head>
 <body>
 	<?php
-	//  search and notify
-	if(isset($availabilities[$seached_reference])) {
-		if(isset($availabilities[$seached_reference][$searched_zone])) {
-			if($availabilities[$seached_reference][$searched_zone] != "unavailable" ) {
-				//echo "envoi email ... <br/>";
-				$cmd = $mail_cmd . " " . $email_recipient . " " .
-				"\"Kimsufi availability\"" . " " .
-				"\"$seached_reference has availability " . $availabilities[$seached_reference][$searched_zone] . " in zone $searched_zone !!!";
-				//echo $cmd; die;
-				$output = exec_cmd($cmd, true);
-				//die;
-			}
-		}
-	}
-	
-	
 	//  display table
 	?>
 	<table>

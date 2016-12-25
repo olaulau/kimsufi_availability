@@ -2,14 +2,14 @@
 <?php
 
 /*
- * crontab example :
- * *      *       *       *       *       cd <dir>/kimsufi_availability/ && ./cron.php 2>&1
- */
+crontab example :
+*	*	*	*	*	cd <dir>/kimsufi_availability/ && /usr/bin/php cron.php 2>&1
+*/
 
-require_once './classes/ServersAvailabilitiesCache.class.php';
+require_once __DIR__ . '/classes/ServersAvailabilitiesCache.class.php';
+require_once __DIR__ . '/config.inc.php';
 
-$searched_ref = '160sk1';
-$searched_zone = 'fr';
+
 $not_available = 'unavailable';
 
 
@@ -20,12 +20,12 @@ $sa = $sac->get();
 
 //  display data
 foreach ($sa as $ref => $server) {
-	if($ref === $searched_ref) {
+	if($ref === $conf['searched_ref']) {
 		foreach ($server as $zone => $availability) {
-			if($zone === $searched_zone) {
+			if($zone === $conf['searched_zone']) {
 				if($availability !== $not_available) {
-// 					echo 'kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!';
-					$cmd = 'cd ./scripts/ && ./mail.sh email@gmail.com "kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!" "kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!"';
+					echo 'kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!';
+					$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!" "kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!"';
 					exec ( $cmd.' 2>&1' , $output , $return_var );
 					
 					echo "<pre>$cmd</pre>";
