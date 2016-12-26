@@ -4,5 +4,13 @@
 
 $conf['recipient_email'] = '';
 
-$conf['searched_ref'] = '160sk1';
-$conf['searched_zone'] = 'fr';
+$conf['searched'] = array(
+	array(
+		'ref' => '160sk1',
+		'zone' => 'fr'
+	),
+	array(
+		'ref' => '160sk2',
+		'zone' => 'fr'
+	),
+);
