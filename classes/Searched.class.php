@@ -2,7 +2,7 @@
 
 class Searched {
 	
-	private static $searched_filename = __DIR__ . '/data/searched.json';
+	private static $searched_filename = __DIR__ . '/../data/searched.json';
 	
 	private $tab = NULL;
 	

@@ -39,21 +39,21 @@ foreach ($sa as $ref => $server) {
 		if(is_searched($ref, $zone)) {
 			$last_availability = $searched->getAvailability($ref, $zone);
 			if($availability !== $not_available  &&  $availability !== $last_availability) { // is available
-				$searched->setAvailability($res, $zone, $availability);
+				$searched->setAvailability($ref, $zone, $availability);
 				$message = 'kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!';
 				echo $message;
 				$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "' . $message . '" "' . $message . '"';
-// 				exec ( $cmd.' 2>&1' , $output , $return_var );
+				exec ( $cmd.' 2>&1' , $output , $return_var );
 				echo "<pre>$cmd</pre>";
 				echo "<pre>$return_var</pre>";
 				echo "<pre>" . var_export($output, true) . "</pre>";
 			}
 			else if($availability === $not_available  &&  $availability !== $last_availability  &&  $availability !== NULL) { // became unavailable
-				$searched->setAvailability($res, $zone, $availability);
+				$searched->setAvailability($ref, $zone, $availability);
 				$message = 'kimsufi server ' . $server['name'] . ' is ' . $availability . ' in zone ' . $zone . ' !!!';
 				echo $message;
 				$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "' . $message . '" "' . $message . '"';
-// 				exec ( $cmd.' 2>&1' , $output , $return_var );
+				exec ( $cmd.' 2>&1' , $output , $return_var );
 				echo "<pre>$cmd</pre>";
 				echo "<pre>$return_var</pre>";
 				echo "<pre>" . var_export($output, true) . "</pre>";
