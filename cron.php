@@ -7,6 +7,7 @@ crontab example :
 */
 
 require_once __DIR__ . '/classes/ServersAvailabilitiesCache.class.php';
+require_once __DIR__ . '/classes/Searched.class.php';
 require_once __DIR__ . '/config.inc.php';
 
 
@@ -16,6 +17,9 @@ $not_available = 'unavailable';
 // get data
 $sac = new ServersAvailabilitiesCache();
 $sa = $sac->get();
+
+$searched = new Searched();
+$searched->load();
 
 
 function is_searched($ref, $zone) {
@@ -32,13 +36,32 @@ function is_searched($ref, $zone) {
 //  display data
 foreach ($sa as $ref => $server) {
 	foreach ($server as $zone => $availability) {
-		if($availability !== $not_available  &&  is_searched($ref, $zone)) {
-			echo 'kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!';
-			$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!" "kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!"';
-			exec ( $cmd.' 2>&1' , $output , $return_var );
-			echo "<pre>$cmd</pre>";
-			echo "<pre>$return_var</pre>";
-			echo "<pre>" . var_export($output, true) . "</pre>";
+		if(is_searched($ref, $zone)) {
+			$last_availability = $searched->getAvailability($ref, $zone);
+			if($availability !== $not_available  &&  $availability !== $last_availability) { // is available
+				$searched->setAvailability($res, $zone, $availability);
+				$message = 'kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!';
+				echo $message;
+				$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "' . $message . '" "' . $message . '"';
+// 				exec ( $cmd.' 2>&1' , $output , $return_var );
+				echo "<pre>$cmd</pre>";
+				echo "<pre>$return_var</pre>";
+				echo "<pre>" . var_export($output, true) . "</pre>";
+			}
+			else if($availability === $not_available  &&  $availability !== $last_availability  &&  $availability !== NULL) { // became unavailable
+				$searched->setAvailability($res, $zone, $availability);
+				$message = 'kimsufi server ' . $server['name'] . ' is ' . $availability . ' in zone ' . $zone . ' !!!';
+				echo $message;
+				$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "' . $message . '" "' . $message . '"';
+// 				exec ( $cmd.' 2>&1' , $output , $return_var );
+				echo "<pre>$cmd</pre>";
+				echo "<pre>$return_var</pre>";
+				echo "<pre>" . var_export($output, true) . "</pre>";
+			}
 		}
 	}
 }
+
+
+// save data
+$searched->save();

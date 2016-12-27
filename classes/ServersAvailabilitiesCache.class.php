@@ -12,8 +12,6 @@ class ServersAvailabilitiesCache extends SimpleCache {
 	
 	
 	public function realQuery() {
-		$res = array();
-		
 		$sc = new ServersCache();
 		$servers = $sc->get();
 		
@@ -25,6 +23,7 @@ class ServersAvailabilitiesCache extends SimpleCache {
 			$zones[] = $id;
 		}
 		
+		$res = array();
 		foreach ($servers as $ref => $server) {
 			$res[$ref] = $server;
 			foreach($zones as $zone) {
