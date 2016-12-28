@@ -5,7 +5,7 @@ require_once __DIR__ . '/SimpleCache.class.php';
 class ServersWsCache extends SimpleCache {
 	
 	public function __construct() {
-		parent::__construct('servers_ws', 5);
+		parent::__construct('servers_ws', 10);
 	}
 	
 	

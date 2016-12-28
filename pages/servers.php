@@ -5,6 +5,11 @@ require_once __DIR__ . '/../classes/ServersCache.class.php';
 $sc = new ServersCache();
 $servers = $sc->get();
 
+$cols = array();
+foreach (reset($servers) as $col => $value) {
+	$cols[] = $col;
+}
+
 
 //  display data
 ?>
@@ -31,22 +36,26 @@ $servers = $sc->get();
 	<table class="table">
 		<tr>
 			<th>ref</th>
-			<th>actions</th>
-			<th>availability</th>
-			<th>name</th>
-			<th>price</th>
-			<th>currency</th>
+			<?php
+			foreach ($cols as $col) {
+				?>
+				<th><?= $col ?></th>
+				<?php
+			}
+			?>
 		</tr>
 		<?php
 		foreach($servers as $ref => $row) {
 			?>
 			<tr>
 				<td><?= $ref ?></td>
-				<td><?= $row['actions'] ?></td>
-				<td><?= $row['availability'] ?></td>
-				<td><?= $row['name'] ?></td>
-				<td><?= $row['price'] ?></td>
-				<td><?= $row['currency'] ?></td>
+				<?php
+				foreach ($cols as $col) {
+					?>
+					<td><?= $row[$col] ?></td>
+					<?php
+				}
+				?>
 			</tr>
 			<?php
 		}
