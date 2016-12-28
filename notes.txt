@@ -3,3 +3,10 @@ http://stackoverflow.com/questions/1377564/php-check-whether-incoming-request-is
 
 run multiple ws queries using multiple threads
 
+kimsufi api ? https://eu.api.kimsufi.com/console/#/order/dedicated/server#GET
+
+also get first table of servers
+
+
+needed for smtp-cli :
+apt install libio-socket-ssl-perl  libdigest-hmac-perl  libterm-readkey-perl libmime-lite-perl libfile-libmagic-perl libio-socket-inet6-perl
