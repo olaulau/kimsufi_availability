@@ -52,7 +52,7 @@ foreach (reset($servers) as $col => $value) {
 				<?php
 				foreach ($cols as $col) {
 					?>
-					<td><?= $row[$col] ?></td>
+					<td><?= is_array($row[$col]) ? implode('<br>', $row[$col]) : $row[$col] ?></td>
 					<?php
 				}
 				?>

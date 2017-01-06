@@ -48,19 +48,19 @@ class ServersCache extends SimpleCache {
 				
 				// cpu
 				$col = $cols->item(1);
-				$cpu = self::DOMinnerHTML($col);
+				$cpu = explode('<br>', self::DOMinnerHTML($col));
 				
 				// indice
 				$col = $cols->item(2);
-				$indice = self::DOMinnerHTML($col);
+				$indice = explode('<br>', self::DOMinnerHTML($col));
 				
 				// cores
 				$col = $cols->item(3);
-				$cores = self::DOMinnerHTML($col);
+				$cores = explode('<br>', self::DOMinnerHTML($col));
 				
 				// freq
 				$col = $cols->item(4);
-				$freq = self::DOMinnerHTML($col);
+				$freq = explode('<br>', self::DOMinnerHTML($col));
 				
 				// ram
 				$col = $cols->item(5);

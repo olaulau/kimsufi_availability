@@ -48,7 +48,7 @@ $sa = $sac->get();
 			<?php
 			foreach ($server as $val) {
 				?>
-				<td><?= $val ?></td>
+				<td><?= is_array($val) ? implode('<br>', $val) : $val ?></td>
 				<?php
 			}
 			?>
