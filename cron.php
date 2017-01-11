@@ -39,9 +39,10 @@ foreach ($sa as $ref => $server) {
 		if(is_searched($ref, $zone)) {
 			$last_availability = $searched->getAvailability($ref, $zone);
 			if($availability !== $not_available  &&  $availability !== $last_availability) { // is available
+				$order_url = 'https://www.kimsufi.com/fr/commande/kimsufi.xml?reference=' . $ref;
 				$searched->setAvailability($ref, $zone, $availability);
 				$subject = 'kimsufi server ' . $server['name'] . ' is available ' . $availability . ' in zone ' . $zone . ' !!!';
-				$message = $subject . PHP_EOL . 'https://www.kimsufi.com/fr/commande/kimsufi.xml?reference=' . $ref;
+				$message = $subject . PHP_EOL . $order_url;
 				echo $message;
 				$cmd = 'cd ./scripts/ && ./mail.sh ' . $conf['recipient_email'] . ' "' . $subject . '" "' . $message . '"';
 				exec ( $cmd.' 2>&1' , $output , $return_var );

@@ -48,7 +48,7 @@ class ServersCache extends SimpleCache {
 				
 				// cpu
 				$col = $cols->item(1);
-				$cpu = explode('<br>', self::DOMinnerHTML($col));
+				$cpu = explode('<br>', str_replace('™', '', self::DOMinnerHTML($col)));
 				
 				// indice
 				$col = $cols->item(2);
