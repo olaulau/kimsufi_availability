@@ -52,11 +52,16 @@ class ServersCache extends SimpleCache {
 				
 				// indice
 				$col = $cols->item(2);
-				$indice = explode('<br>', self::DOMinnerHTML($col));
+				$links = $col->getElementsByTagName('a');
+				$indice = array();
+				foreach ($links as $link) {
+					$indice[] = $link->nodeValue;
+				}
 				
 				// cores
 				$col = $cols->item(3);
 				$cores = explode('<br>', self::DOMinnerHTML($col));
+				//TODO trim those data's !
 				
 				// freq
 				$col = $cols->item(4);

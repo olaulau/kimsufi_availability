@@ -18,19 +18,11 @@ class ServersAvailabilitiesCache extends SimpleCache {
 		$ac = new AvailabilitiesCache();
 		$availabilities = $ac->get();
 		
-		$zones = array();
-		foreach(reset($availabilities) as $id => $value) {
-			$zones[] = $id;
-		}
-		
 		$res = array();
 		foreach ($servers as $ref => $server) {
-			$res[$ref] = $server;
-			foreach($zones as $zone) {
-				$res[$ref][$zone] = $availabilities[$ref][$zone];
-			}
+			$res[$ref]['server'] = $server;
+			$res[$ref]['availabilities'] = $availabilities[$ref];
 		}
-		
 		return $res;
 	}
 }

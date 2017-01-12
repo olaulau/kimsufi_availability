@@ -34,8 +34,13 @@ $sa = $sac->get();
 		<tr>
 			<th>ref</th>
 			<?php
-			foreach(reset($sa) as $header => $val) {
+			foreach(reset($sa)['server'] as $header => $val) {
 				?>
+				<th><?= $header ?></th>
+				<?php
+			}
+			foreach(reset($sa)['availabilities'] as $header => $val) {
+			?>
 				<th><?= $header ?></th>
 				<?php
 			}
@@ -46,9 +51,14 @@ $sa = $sac->get();
 			<tr>
 				<td><?= $ref ?></td>
 			<?php
-			foreach ($server as $val) {
+			foreach ($server['server'] as $val) {
 				?>
 				<td><?= is_array($val) ? implode('<br>', $val) : $val ?></td>
+				<?php
+			}
+			foreach ($server['availabilities'] as $val) {
+			?>
+				<td><?= $val !== 'unavailable' ? '<a href="https://www.kimsufi.com/fr/commande/kimsufi.xml?reference='.$ref.'">'.$val.'</a>' : $val ?></td>
 				<?php
 			}
 			?>
